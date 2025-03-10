@@ -9,7 +9,7 @@ namespace REPO.Overhaul
     public class Plugin : BaseUnityPlugin
     {
         internal new static ManualLogSource Logger;
-        private readonly Harmony _harmony = new Harmony("com.revolution.timermod");
+        private readonly Harmony _harmony = new Harmony("com.revolution.repo.overhaul");
 
         public void Awake()
         {

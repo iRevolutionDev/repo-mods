@@ -19,13 +19,10 @@ namespace REPO.Overhaul
 
             if (SemiFunc.RunIsLevel() && previousLevel == RunManager.instance.levelShop)
             {
-                foreach (var player in PhotonNetwork.PlayerList)
+                foreach (var playerAvatar in _previousPlayerHealth.Keys)
                 {
-                    var playerAvatar = PlayerUtils.FindPlayerAvatar(player);
-                    if (playerAvatar == null) continue;
-
-                    if (!_previousPlayerHealth.TryGetValue(playerAvatar, out var health)) continue;
-
+                    var health = _previousPlayerHealth[playerAvatar];
+                    
                     StatsManager.instance.SetPlayerHealth(SemiFunc.PlayerGetSteamID(playerAvatar), health, false);
 
                     _previousPlayerHealth.Remove(playerAvatar);

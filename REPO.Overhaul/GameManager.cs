@@ -26,7 +26,6 @@ namespace REPO.Overhaul
 
                     if (!_previousPlayerHealth.TryGetValue(playerAvatar, out var health)) continue;
 
-                    PlayerUtils.GetPlayerHealth(playerAvatar);
                     StatsManager.instance.SetPlayerHealth(SemiFunc.PlayerGetSteamID(playerAvatar), health, false);
 
                     _previousPlayerHealth.Remove(playerAvatar);

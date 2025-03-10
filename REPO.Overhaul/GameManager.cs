@@ -30,19 +30,30 @@ namespace REPO.Overhaul
                     StatsManager.instance.SetPlayerHealth(SemiFunc.PlayerGetSteamID(playerAvatar), health, false);
 
                     _previousPlayerHealth.Remove(playerAvatar);
+
+                    if (!SemiFunc.IsMultiplayer()) continue;
+
+                    var maxHealth = PlayerUtils.GetPlayerMaxHealth(playerAvatar);
+                    playerAvatar.photonView.RPC("UpdateHealthRPC", RpcTarget.Others, health, maxHealth, false);
                 }
             }
 
             if (level != RunManager.instance.levelShop) return;
 
-            foreach (var player in PhotonNetwork.PlayerList)
+            if (SemiFunc.IsMultiplayer())
             {
-                var playerAvatar = PlayerUtils.FindPlayerAvatar(player);
-                if (playerAvatar == null) continue;
+                foreach (var player in PhotonNetwork.PlayerList)
+                {
+                    var playerAvatar = PlayerUtils.FindPlayerAvatar(player);
 
-                if (!PlayerUtils.IsPlayerAlive(playerAvatar)) continue;
+                    if (!PlayerUtils.IsPlayerAlive(playerAvatar)) continue;
 
-                SavePlayerHealth(playerAvatar);
+                    SavePlayerHealth(playerAvatar);
+                }
+            }
+            else
+            {
+                SavePlayerHealth(PlayerAvatar.instance);
             }
         }
 
@@ -50,7 +61,10 @@ namespace REPO.Overhaul
         {
             if (player == null) return;
 
-            var health = PlayerUtils.GetPlayerHealth(player);
+            var health = SemiFunc.IsMultiplayer()
+                ? PlayerUtils.GetPlayerHealth(player)
+                : PlayerUtils.GetLocalPlayerHealth();
+
             _previousPlayerHealth[player] = health;
         }
     }

@@ -33,6 +33,9 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
+        <Reference Include="0Harmony">
+            <HintPath>..\..\..\Downloads\R.E.P.O\BepInEx\core\0Harmony.dll</HintPath>
+        </Reference>
         <Reference Include="Assembly-CSharp">
             <HintPath>..\..\..\Downloads\R.E.P.O\REPO_Data\Managed\Assembly-CSharp.dll</HintPath>
         </Reference>

@@ -15,6 +15,8 @@ namespace REPO.Overhaul
         {
             if (level == null) return;
 
+            if (!PhotonNetwork.IsMasterClient) return;
+
             if (SemiFunc.RunIsLevel() && previousLevel == RunManager.instance.levelShop)
             {
                 foreach (var player in PhotonNetwork.PlayerList)
@@ -24,19 +26,21 @@ namespace REPO.Overhaul
 
                     if (!_previousPlayerHealth.TryGetValue(playerAvatar, out var health)) continue;
 
-                    if (!PhotonNetwork.IsMasterClient) continue;
-
                     PlayerUtils.GetPlayerHealth(playerAvatar);
                     StatsManager.instance.SetPlayerHealth(SemiFunc.PlayerGetSteamID(playerAvatar), health, false);
+
+                    _previousPlayerHealth.Remove(playerAvatar);
                 }
             }
 
-            if (level != RunManager.instance.levelShop || !PhotonNetwork.IsMasterClient) return;
+            if (level != RunManager.instance.levelShop) return;
 
             foreach (var player in PhotonNetwork.PlayerList)
             {
                 var playerAvatar = PlayerUtils.FindPlayerAvatar(player);
                 if (playerAvatar == null) continue;
+
+                if (!PlayerUtils.IsPlayerAlive(playerAvatar)) continue;
 
                 SavePlayerHealth(playerAvatar);
             }

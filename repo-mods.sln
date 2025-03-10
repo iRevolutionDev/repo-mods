@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimerMod", "TimerMod\TimerMod.csproj", "{997E9B83-D546-492E-B913-3635242FB66B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{997E9B83-D546-492E-B913-3635242FB66B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{997E9B83-D546-492E-B913-3635242FB66B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{997E9B83-D546-492E-B913-3635242FB66B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{997E9B83-D546-492E-B913-3635242FB66B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

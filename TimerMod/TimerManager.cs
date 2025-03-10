@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Photon.Pun;
-using Photon.Realtime;
 using TimerMod.Utils;
 using TMPro;
 using UnityEngine;
@@ -71,20 +70,12 @@ namespace TimerMod
 
         public static TimerManager Instance => _instance ?? (_instance = new TimerManager());
 
-        public Level CurrentLevel { get; private set; }
-
         public void OnLevelChange(Level level)
         {
             if (level == null) return;
 
             Plugin.Logger.LogInfo($"Level changed to {level.name}");
 
-            if (CurrentLevel != null)
-            {
-                Plugin.Logger.LogInfo("Resetting TimerManager...");
-            }
-
-            CurrentLevel = level;
             Reset();
             TryInitializeUI();
         }
@@ -256,27 +247,12 @@ namespace TimerMod
             PlayerAvatars.Clear();
             foreach (var player in PhotonNetwork.PlayerList)
             {
-                var playerAvatar = FindPlayerAvatar(player);
+                var playerAvatar = PlayerUtils.FindPlayerAvatar(player);
                 if (playerAvatar == null) continue;
 
                 PlayerAvatars.Add(playerAvatar);
                 Plugin.Logger.LogInfo($"Player added to list: {player.NickName}");
             }
-        }
-
-        private static PlayerAvatar FindPlayerAvatar(Player player)
-        {
-            foreach (var playerAvatar in Object.FindObjectsOfType<PlayerAvatar>())
-            {
-                var component = playerAvatar.GetComponent<PhotonView>();
-                if (component != null && component.Owner.Equals(player))
-                {
-                    return playerAvatar;
-                }
-            }
-
-            Plugin.Logger.LogWarning($"PlayerAvatar not found for {player.NickName}");
-            return null;
         }
 
         private static void SendRandomMessageToAll(List<string> messageList)
